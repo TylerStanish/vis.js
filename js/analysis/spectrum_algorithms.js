@@ -46,11 +46,17 @@ function transformToVisualBins(array) {
 }
 
 function getTransformedSpectrum(array) {
+  // console.log(array);
     var newArr = normalizeAmplitude(array);
+    // console.log(newArr);
     newArr = averageTransform(newArr);
+  // console.log(newArr);
     newArr = tailTransform(newArr);
+  // console.log(newArr);
     newArr = smooth(newArr);
+  // console.log(newArr);
     newArr = exponentialTransform(newArr);
+  // console.log(newArr);
     return newArr;
 }
 
@@ -58,6 +64,7 @@ function normalizeAmplitude(array) {
     var values = [];
     for (var i = 0; i < spectrumSize; i++) {
         if (begun) {
+
             values[i] = array[i] / 255 * spectrumHeight;
         } else {
             value = 1;

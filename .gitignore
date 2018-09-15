@@ -1,3 +1,5 @@
 music/
 *.mp3
 vis2/
+node_modules/
+.idea/

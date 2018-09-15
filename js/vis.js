@@ -21,7 +21,7 @@ var tailMarginSlope = (1 - minMarginWeight) / Math.pow(tailMargin, marginDecay);
 var velMult = 0;
 var particleSize = minParticleSize;
 
-var begun = false;
+var begun = true;
 var ended = false;
 var isPlaying = false;
 var bufferInterval = 1024;
@@ -51,10 +51,10 @@ centerContent();
 
 $('#artist').css('font-size', $('#artist').css('font-size').replace('px', '') * resRatio + 'px');
 $('#title').css('font-size', $('#title').css('font-size').replace('px', '') * resRatio + 'px');
-loadSong();
+// loadSong();
 setupAudioNodes();
 var prefix = window.location.href.split('/')[0] + '//' + window.location.hostname;
-loadSound(prefix + '/content/uc?export=download&id=' + song.getFileId()); // music file
+// loadSound(prefix + '/content/uc?export=download&id=' + song.getFileId()); // music file
 $('#songinfo').css('padding-top', (blockSize - $('#songinfo').height()) / 2);
 centerContent();
 initSpectrumHandler();
