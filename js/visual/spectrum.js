@@ -6,11 +6,14 @@ var db = require('decibels');
 
 function initSpectrumHandler(){
   // scriptProcessor.onaudioprocess = handleAudio
+
   let engine = coreAudio.createNewAudioEngine()
 
   const options = {
     inputChannels: 1,
     outputChannels: 1,
+
+    // this inputDevice is from soundflower
     inputDevice: 2
   }
 
@@ -19,8 +22,6 @@ function initSpectrumHandler(){
   // THIS MIGHT BE IMPORTANT
   // analyzer.fftSize = 1024;
   engine.addAudioCallback(function(inputBuffer){
-    // let spectrum = ft(inputBuffer[0])
-    // console.log(inputBuffer);
     let decibels = inputBuffer[0].map((value) => {
       let d = db.fromGain(value);
       if(isNaN(d)){
@@ -32,11 +33,12 @@ function initSpectrumHandler(){
 
     handleAudio(decibels);
     // handleAudio(inputBuffer[0]);
-    // return inputBuffer;
+
   })
 }
 
 function handleAudio(inputBuffer){
+  // commenting this, because we never play because stuck on loading, and I don't know how to get around this any other way
   // don't do anything if the audio is paused
   // if(!isPlaying){
   //   return
@@ -50,37 +52,16 @@ function handleAudio(inputBuffer){
 
   checkHideableText()
 
-  // console.log('bin count',analyzer.frequencyBinCount);
-
-
-  // var initialArray =  new Uint8Array(analyzer.frequencyBinCount);
-  // var initialArray = inputBuffer;
-
-  // var initialArray = Uint8Array.from(inputBuffer);
-  // for(let i=0; i<inputBuffer.length; i++){
-  //   inputBuffer[i] *= 100;
-  // }
   var initialArray = new Uint8Array(inputBuffer);
+
   // analyzer.getByteFrequencyData(initialArray)
+
   var array = transformToVisualBins(initialArray)
   // console.log(array);
   ctx.clearRect(-ctx.shadowBlur, -ctx.shadowBlur, spectrumWidth + ctx.shadowBlur, spectrumHeight + ctx.shadowBlur)
-  // if(song.getGenre() == 'ayy lmao'){
-  //   handleRainbowSpectrum()
-  // }
   ctx.fillStyle = 'orange' // bar color
 
-  // array = new Uint8Array(63);
-  // for(let i=0; i<array.length; i++){
-  //   array[i] = -i;
-  // }
-
-  // for(let i=0; i<array.length; i++){
-  //   array[i] *= -1;
-  // }
-
   drawSpectrum(array)
-  // requestAnimationFrame(() => handleAudio(inputBuffer));
 }
 
 var spectrumAnimation = 'phase_1'
